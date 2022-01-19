@@ -1,0 +1,80 @@
+{
+    "user_css_file_paths": ["app.css"],
+    "output_css_file_path": "analog.css",
+
+    "input_paths": ["./"],
+    "input_extensions": [".html", ".php"],
+
+    "custom_values": {
+        "dark_red": "rgb(255, 50, 50)",
+        "col": "column"
+    },
+
+    "media_query_type": "min-width",
+
+    "class_mappings": {
+        "p": {
+            "property": "padding"
+        },
+
+        "px": {
+            "property": ["padding-left", "padding-right"]
+        },
+        
+        "m": {
+            "property": "margin"
+        },
+
+        "mt": {
+            "property": "margin-top"
+        },
+
+        "mb": {
+            "property": "margin-bottom"
+        },
+
+        "mx":{
+            "property": ["margin-left", "margin-right"]
+        },
+        
+        "max-w": {
+            "property": "max-width"
+        },
+
+        "min-w": {
+            "property": "min-width"
+        },
+
+        "w": {
+            "property": "width"
+        },
+
+        "h": {
+            "property": "height"
+        },
+
+        "bg": {
+            "property": "background-color"
+        },
+
+        "flex-dir": {
+            "property": "flex-direction"
+        },
+
+        "justify": {
+            "property": "justify-content"
+        },
+
+        "align": {
+            "property": "align-content"
+        }
+    },
+
+    "breakpoint_values": {
+        "xs": "300px",
+        "sm": "500px",
+        "md": "900px",
+        "lg": "1300px",
+        "xl": "1600px"
+    }
+}
