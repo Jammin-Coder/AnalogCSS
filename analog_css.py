@@ -1,4 +1,3 @@
-from webbrowser import get
 from AnalogCSS.tools import get_classes_from_file, append_to_file, write_file
 from AnalogCSS.FindFiles import find_files
 from AnalogCSS.get_config import get_output_css_path
