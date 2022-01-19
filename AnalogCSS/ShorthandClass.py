@@ -15,14 +15,13 @@ class ShorthandClass:
     So if you wanted a CSS class to give a margin of 1rem to an element,
     the shorthand CSS class would be: 'm-1rem'. If you wanted that class to only have an effect
     at the small (sm) breakpoint, you would prepend 'sm:' to the shorthand class, like this: 'sm:m-1rem'.
-
-    
     """
+
     def __init__(self, shorthand_class: str):
 
         # The shorthand CSS class/class name
         self.shorthand_class = shorthand_class
-        self.parsed_name = self.parse_name()
+        self.parsed_name = self.parse_name(shorthand_class)
 
         # Gets the defined breakpoint values from analog_config.json
         self.breakpoint_values = get_breakpoint_values()
@@ -45,9 +44,12 @@ class ShorthandClass:
     def breakpoint_exists(self):
         return BREAKPOINT_SEPERATOR in self.shorthand_class
 
-    def parse_name(self):
+    def parse_name(self, name):
+        """
+        Prepends any special characters with a backslash to escape them
+        """
         parsed_name = ""
-        for char in self.shorthand_class:
+        for char in name:
             if char in SPECIAL_CHARS:
                 parsed_name += f"\{char}"
             else:
@@ -134,10 +136,10 @@ class ShorthandClass:
             output += f"@media ({mq_type}: {breakpoint}) {{\n"
 
             if self.get_shorthand_property() in self.user_css_classes.keys():
-                # This means the user is adding a breakpoint to one of their classes.
+                # This means the user is adding a breakpoint to one of their own predefined classes.
                 user_class_name = self.get_shorthand_property()
                 user_css_class = self.user_css_classes[user_class_name]
-                user_css_class.name = self.parsed_name(user_class_name)
+                user_css_class.name = self.parse_name(user_class_name)
                 return user_css_class.create_media_query(mq_type, breakpoint)
 
                 
