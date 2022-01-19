@@ -103,19 +103,21 @@ class ShorthandClass:
             if char not in NUMBERS and char not in "/.":
                 return value[i + 2:]
 
-    def get_value(self, value):
-        # Evaluate fractions
+    def eval_fraction(self, value):
+        slash_index = value.index("/")
+        for i in range(slash_index + 1, len(value)):
+            if value[i] not in NUMBERS:
+                expression = value[:i]
+                evaluated_value = round(int(expression.split("/")[0]) / int(expression.split("/")[1]), 2)
+                unit = self.get_unit(value)
+                return str(evaluated_value) + unit
+
+    def get_true_value(self, value):
         if "/" in value:
-            slash_index = value.index("/")
-            for i in range(slash_index + 1, len(value)):
-                if value[i] not in NUMBERS:
-                    expression = value[:i]
-                    evaluated_value = round(int(expression.split("/")[0]) / int(expression.split("/")[1]), 2)
-                    unit = self.get_unit(value)
-                    value = str(evaluated_value) + unit
-                    break
+            # Value is a fractional one, so evaluate the fraction and return the value.
+            return self.eval_fraction(value)
         
-        # Otherwise we can just return the plain value.
+        # If this line is reached, we don't have to do anything to the value
         return value
 
     def generate(self):
@@ -156,10 +158,7 @@ class ShorthandClass:
         abbreviated_prop = self.get_abbreviated_property()
         attributes = self.get_prop_attributes(abbreviated_prop)
 
-        if not attributes:
-            attributes = abbreviated_prop
-
-        value = self.get_value(self.get_shorthand_value())
+        value = self.get_true_value(self.get_shorthand_value())
 
         css_class = CSSClass(self.parsed_name)
 
@@ -167,12 +166,15 @@ class ShorthandClass:
             for attr in attributes:
                 css_class.set(attr, value)
         else:
+            if not attributes:
+                attributes = abbreviated_prop
             css_class.set(attributes, value)
 
+        # Generate a valid CSS class
         compiled_class = css_class.compile()
         output += compiled_class
 
-
+        # If the shorthand class used a media query then we need to add an extra brace to close of the media query.
         if is_media_query == True:
             output += "}\n"
 
