@@ -15,14 +15,13 @@ class ShorthandClass:
     So if you wanted a CSS class to give a margin of 1rem to an element,
     the shorthand CSS class would be: 'm-1rem'. If you wanted that class to only have an effect
     at the small (sm) breakpoint, you would prepend 'sm:' to the shorthand class, like this: 'sm:m-1rem'.
-
-    
     """
+
     def __init__(self, shorthand_class: str):
 
         # The shorthand CSS class/class name
         self.shorthand_class = shorthand_class
-        self.parsed_name = self.parse_name()
+        self.parsed_name = self.parse_name(shorthand_class)
 
         # Gets the defined breakpoint values from analog_config.json
         self.breakpoint_values = get_breakpoint_values()
@@ -45,9 +44,12 @@ class ShorthandClass:
     def breakpoint_exists(self):
         return BREAKPOINT_SEPERATOR in self.shorthand_class
 
-    def parse_name(self):
+    def parse_name(self, name):
+        """
+        Prepends any special characters with a backslash to escape them
+        """
         parsed_name = ""
-        for char in self.shorthand_class:
+        for char in name:
             if char in SPECIAL_CHARS:
                 parsed_name += f"\{char}"
             else:
@@ -68,19 +70,20 @@ class ShorthandClass:
 
         return None
     
-    def get_shorthand_property(self):
+    def get_abbreviated_property(self):
         """
-        Gets the CSS property from the shorthand CSS class and returns its mapped value.
+        Gets the CSS property from the shorthand CSS class and returns it.
         """
-        property_shorthand = self.shorthand_class.split(PROPTERTY_SEPERATOR)[0]
-        if BREAKPOINT_SEPERATOR in property_shorthand:
-            property_shorthand = property_shorthand[property_shorthand.index(BREAKPOINT_SEPERATOR) + 1:]
-        
-        return property_shorthand
+        css_prop_name = self.shorthand_class.split(PROPTERTY_SEPERATOR)[0]
 
-    def get_real_property(self, prop_shorthand):
-        if prop_shorthand in self.class_mappings.keys():
-            return self.class_mappings[prop_shorthand]["property"]
+        if BREAKPOINT_SEPERATOR in css_prop_name:
+            css_prop_name = css_prop_name[css_prop_name.index(BREAKPOINT_SEPERATOR) + 1:]
+        
+        return css_prop_name
+
+    def get_prop_attributes(self, abbr_prop):
+        if abbr_prop in self.class_mappings.keys():
+            return self.class_mappings[abbr_prop]["property"]
 
     def get_shorthand_value(self):
         """
@@ -97,29 +100,33 @@ class ShorthandClass:
 
     def get_unit(self, value):
         for i, char in enumerate(value):
-            if char not in NUMBERS:
+            if char not in NUMBERS and char not in "/.":
                 return value[i + 2:]
 
-    def get_value(self, value):
-        # Evaluate fractions
+    def eval_fraction(self, value):
+        slash_index = value.index("/")
+        for i in range(slash_index + 1, len(value)):
+            if value[i] not in NUMBERS:
+                expression = value[:i]
+                evaluated_value = round(int(expression.split("/")[0]) / int(expression.split("/")[1]), 2)
+                unit = self.get_unit(value)
+                return str(evaluated_value) + unit
+
+    def get_true_value(self, value):
         if "/" in value:
-            slash_index = value.index("/")
-            for i in range(slash_index + 1, len(value)):
-                if value[i] not in NUMBERS:
-                    expression = value[:i]
-                    evaluated_value = round(int(expression.split("/")[0]) / int(expression.split("/")[1]), 2)
-                    unit = self.get_unit(value)
-                    value = str(evaluated_value) + unit
-                    break
+            # Value is a fractional one, so evaluate the fraction and return the value.
+            return self.eval_fraction(value)
         
-        # Otherwise the value is good
+        # If this line is reached, we don't have to do anything to the value
         return value
 
     def generate(self):
-
         output = ""
         is_media_query = False
 
+        """ Check if the shorthand class contains a breakpoint, if so, 
+            get the value of the breakpoint and generate a CSS class that fulfils the media query specifications 
+        """
         if self.breakpoint_exists():
             is_media_query = True
             mq_type = get_media_query_type()
@@ -129,27 +136,29 @@ class ShorthandClass:
             if breakpoint[0] == "@" and breakpoint not in self.breakpoint_values.keys():
                 breakpoint = self.get_value(breakpoint[1:])
 
-
-            # self.media_queries[breakpoint].append()
             output += f"@media ({mq_type}: {breakpoint}) {{\n"
 
-            if self.get_shorthand_property() in self.user_css_classes.keys():
-                # This means the user is adding a breakpoint to one of their classes.
-                user_class_name = self.get_shorthand_property()
+            if self.get_abbreviated_property() in self.user_css_classes.keys():
+                # This means the user is adding a breakpoint to one of their own predefined classes.
+                user_class_name = self.get_abbreviated_property()
                 user_css_class = self.user_css_classes[user_class_name]
-                user_css_class.name = self.parsed_name(user_class_name)
+                user_css_class.name = self.parse_name(user_class_name)
                 return user_css_class.create_media_query(mq_type, breakpoint)
 
-                
-
+        
         if not self.is_shorthand_class():
+            """ This is checked here because the user might have added a class to 
+                an element with the name of md:flex-col. 
+                Therefore if this IF statement is reached, we know the user is not applying a their class to media query,
+                and if they are not assigning any values to CSS properties, then we can return an empty string.
+            """
             return ""
         
-        shorthand_prop = self.get_shorthand_property()
-        attributes = self.get_real_property(shorthand_prop)
-        if not attributes:
-            attributes = shorthand_prop
-        value = self.get_value(self.get_shorthand_value())
+
+        abbreviated_prop = self.get_abbreviated_property()
+        attributes = self.get_prop_attributes(abbreviated_prop)
+
+        value = self.get_true_value(self.get_shorthand_value())
 
         css_class = CSSClass(self.parsed_name)
 
@@ -157,12 +166,15 @@ class ShorthandClass:
             for attr in attributes:
                 css_class.set(attr, value)
         else:
+            if not attributes:
+                attributes = abbreviated_prop
             css_class.set(attributes, value)
 
+        # Generate a valid CSS class
         compiled_class = css_class.compile()
         output += compiled_class
 
-
+        # If the shorthand class used a media query then we need to add an extra brace to close of the media query.
         if is_media_query == True:
             output += "}\n"
 
