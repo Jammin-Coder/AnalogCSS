@@ -101,7 +101,7 @@ class ShorthandClass:
     def get_unit(self, value):
         for i, char in enumerate(value):
             if char not in NUMBERS and char not in "/.":
-                return value[i + 2:]
+                return value[i:]
 
     def eval_fraction(self, value):
         slash_index = value.index("/")
@@ -110,6 +110,7 @@ class ShorthandClass:
                 expression = value[:i]
                 evaluated_value = round(int(expression.split("/")[0]) / int(expression.split("/")[1]), 2)
                 unit = self.get_unit(value)
+                print(unit)
                 return str(evaluated_value) + unit
 
     def get_true_value(self, value):
