@@ -6,8 +6,7 @@
     "input_extensions": [".html", ".php"],
 
     "custom_values": {
-        "dark_red": "rgb(255, 50, 50)",
-        "col": "column"
+        "col": "column",
     },
 
     "media_query_type": "min-width",
@@ -20,23 +19,27 @@
 
         "px": {
             "property": ["padding-left", "padding-right"],
-            "unit": "em"
+            "unit": "rem"
+        },
+        
+        "py": {
+            "property": ["padding-top", "padding-bottom"],
+            "unit": "rem"
         },
         
         "m": {
-            "property": "margin"
+            "property": "margin",
+            "unit": "rem"
         },
-
-        "mt": {
-            "property": "margin-top"
-        },
-
-        "mb": {
-            "property": "margin-bottom"
+        
+        "my":{
+            "property": ["margin-top", "margin-bottom"],
+            "unit": "rem"
         },
 
         "mx":{
-            "property": ["margin-left", "margin-right"]
+            "property": ["margin-left", "margin-right"],
+            "unit": "rem"
         },
         
         "max-w": {
@@ -74,9 +77,9 @@
 
     "breakpoint_values": {
         "xs": "300px",
-        "sm": "500px",
-        "md": "900px",
-        "lg": "1300px",
-        "xl": "1600px"
+        "sm": "600px",
+        "md": "1000px",
+        "lg": "1400px",
+        "xl": "1700px"
     }
 }
