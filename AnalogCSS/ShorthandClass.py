@@ -1,3 +1,5 @@
+from AnalogCSS.ShorthandValue import ShorthandValue
+from AnalogCSS.ShorthandProperty import ShorthandProperty
 from AnalogCSS.get_config import *
 from AnalogCSS.syntax import *
 from AnalogCSS.CSSClass import CSSClass
@@ -35,7 +37,7 @@ class ShorthandClass:
         # Gets the predefined CSS that the user wrote.
         self.user_css_classes = GetUserCSS(get_user_css_file_paths()).get_classes()
 
-        self.media_queries = dict()  # {"breakpoint": list(<all classes fro this breakpoint>)}
+        self.abbr_prop = self.get_abbreviated_property()
 
 
     def is_shorthand_class(self):
@@ -155,10 +157,18 @@ class ShorthandClass:
             return ""
         
 
-        abbreviated_prop = self.get_abbreviated_property()
-        attributes = self.get_prop_attributes(abbreviated_prop)
+        
+        css_prop = ShorthandProperty(self.abbr_prop, self.get_shorthand_value())
+        attributes = self.get_prop_attributes(self.abbr_prop)
+        value = str(css_prop.prop_value)
+        if css_prop.prop_unit:
+            value += css_prop.prop_unit
+        
+        print("\n[+] UNIT: " + str(css_prop.prop_unit))
+        print("[+] PROPEPRTY: " + str(self.abbr_prop))
+        print("[+] VALUE: " + str(css_prop.prop_value))
 
-        value = self.get_true_value(self.get_shorthand_value())
+
 
         css_class = CSSClass(self.parsed_name)
 
@@ -167,7 +177,7 @@ class ShorthandClass:
                 css_class.set(attr, value)
         else:
             if not attributes:
-                attributes = abbreviated_prop
+                attributes = self.abbr_prop
             css_class.set(attributes, value)
 
         # Generate a valid CSS class

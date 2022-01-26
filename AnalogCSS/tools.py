@@ -9,6 +9,8 @@ from bs4 import BeautifulSoup
 from AnalogCSS.syntax import *
 
 NUMBERS = "0123456789"
+NUMERICAL = "NUMERICAL"
+STRING = "STRING"
 
 # def get_args():
 #     parser = argparse.ArgumentParser()
