@@ -14,11 +14,13 @@
 
     "class_mappings": {
         "p": {
-            "property": "padding"
+            "property": "padding",
+            "unit": "rem"
         },
 
         "px": {
-            "property": ["padding-left", "padding-right"]
+            "property": ["padding-left", "padding-right"],
+            "unit": "em"
         },
         
         "m": {

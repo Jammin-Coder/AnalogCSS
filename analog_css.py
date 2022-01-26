@@ -33,6 +33,7 @@ while True:
     except KeyboardInterrupt:
         # Make sure the program generates all the classes again before quitting.
         print("[+] Generating classes one more time.")
+        write_file(output_path, "")
         for _class in generated_classes:
             append_to_file(output_path, _class)
 
