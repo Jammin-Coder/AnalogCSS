@@ -105,15 +105,6 @@ class ShorthandClass:
             if char not in NUMBERS and char not in "/.":
                 return value[i:]
 
-    def eval_fraction(self, value):
-        slash_index = value.index("/")
-        for i in range(slash_index + 1, len(value)):
-            if value[i] not in NUMBERS:
-                expression = value[:i]
-                evaluated_value = round(int(expression.split("/")[0]) / int(expression.split("/")[1]), 2)
-                unit = self.get_unit(value)
-                return str(evaluated_value) + unit
-
     def get_true_value(self, value):
         if "/" in value:
             # Value is a fractional one, so evaluate the fraction and return the value.
@@ -164,12 +155,6 @@ class ShorthandClass:
         if css_prop.prop_unit:
             value += css_prop.prop_unit
         
-        print("\n[+] UNIT: " + str(css_prop.prop_unit))
-        print("[+] PROPEPRTY: " + str(self.abbr_prop))
-        print("[+] VALUE: " + str(css_prop.prop_value))
-
-
-
         css_class = CSSClass(self.parsed_name)
 
         if type(attributes) == list:
