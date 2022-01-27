@@ -1,3 +1,4 @@
 *.css
 *.html
 *.json
+__pycache__

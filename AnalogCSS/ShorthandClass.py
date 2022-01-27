@@ -152,7 +152,7 @@ class ShorthandClass:
         css_prop = ShorthandProperty(self.abbr_prop, self.get_shorthand_value())
         attributes = self.get_prop_attributes(self.abbr_prop)
         value = str(css_prop.prop_value)
-        if css_prop.prop_unit:
+        if css_prop.prop_unit and value[-1] in NUMBERS:
             value += css_prop.prop_unit
         
         css_class = CSSClass(self.parsed_name)

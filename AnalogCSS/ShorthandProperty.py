@@ -12,7 +12,7 @@ class ShorthandProperty:
         self.class_mappings = get_class_mappings()
 
         self.prop_unit = None
-        self.defined_unit = self.get_defined_unit()
+        self.defined_unit = None
         self.prop_value = self.full_prop_value.value
 
         self.attributes = self.get_prop_attributes()
@@ -32,6 +32,7 @@ class ShorthandProperty:
             if self.full_prop_value.unit:
                 self.prop_unit = self.full_prop_value.unit
             else:
+                self.defined_unit = self.get_defined_unit()
                 self.prop_unit = self.defined_unit
     
 
