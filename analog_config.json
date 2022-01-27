@@ -20,11 +20,12 @@
 
         "px": {
             "property": ["padding-left", "padding-right"],
-            "unit": "em"
+            "unit": "rem"
         },
         
         "m": {
-            "property": "margin"
+            "property": "margin",
+            "unit": "rem"
         },
 
         "mt": {

@@ -1,2 +1,5 @@
-# AnalogCSS
-A CSS framework for people who hate CSS
+### Configuration 
+There's a file called `analog_config.json`, this is where you can configure how you want to use this program, you might need to modify a couple values in there for the program to work as you wish.   
+First thing you want to do is configure `user_css_file_paths`, `output_css_file_path`, and `input_paths` for your purposes.  
+`user_css_file_paths` is a list of paths to CSS files that you are using for your project. The program will not modify these files, it will just read them and extract the classes you defined. Modify or add paths according to the directory structure of your project.  
+`output_css_file_path` is the output path for the CSS classes the program will generate when it's running. This is also the file to link to in your markup to apply the generated styles to your page. DO NOT write any of your own classes in the file that is specified in that variable since they will be deleted when the program generates new classes.
