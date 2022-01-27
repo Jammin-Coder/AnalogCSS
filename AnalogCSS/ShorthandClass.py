@@ -105,14 +105,6 @@ class ShorthandClass:
             if char not in NUMBERS and char not in "/.":
                 return value[i:]
 
-    def get_true_value(self, value):
-        if "/" in value:
-            # Value is a fractional one, so evaluate the fraction and return the value.
-            return self.eval_fraction(value)
-        
-        # If this line is reached, we don't have to do anything to the value
-        return value
-
     def generate(self):
         output = ""
         is_media_query = False
@@ -127,7 +119,7 @@ class ShorthandClass:
             
             # This means the breakpoint is a custom one
             if breakpoint[0] == "@" and breakpoint not in self.breakpoint_values.keys():
-                breakpoint = self.get_value(breakpoint[1:])
+                breakpoint = self.get_breakpoint()[1:]
 
             output += f"@media ({mq_type}: {breakpoint}) {{\n"
 
