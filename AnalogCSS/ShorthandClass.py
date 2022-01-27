@@ -153,6 +153,7 @@ class ShorthandClass:
         attributes = self.get_prop_attributes(self.abbr_prop)
         value = str(css_prop.prop_value)
         if css_prop.prop_unit and value[-1] in NUMBERS:
+            # If there is a unit AND the last character of the value is a number, then append the unit
             value += css_prop.prop_unit
         
         css_class = CSSClass(self.parsed_name)
