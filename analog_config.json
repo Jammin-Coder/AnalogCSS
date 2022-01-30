@@ -101,6 +101,10 @@
         "bg": {
             "property": "background-color"
         },
+        
+        "d": {
+            "property": "display"
+        },
 
         "flex-dir": {
             "property": "flex-direction"
@@ -111,7 +115,7 @@
         },
 
         "align": {
-            "property": "align-content"
+            "property": "align-items"
         },
 
         "text": {
