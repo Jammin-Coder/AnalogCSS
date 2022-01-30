@@ -1,5 +1,5 @@
 # AnalogCSS
-#### A programatic CSS utility framework to generate utility classes on the fly, without clouding up your stylesheet or markup.
+#### A programatic CSS utility framework to generate dynamic utility classes on the fly, without clouding up your stylesheet or markup.
 
 # Quick and basic usage instructions:
 Download the code from this repo: https://github.com/Jammin-Coder/AnalogCSS/archive/refs/heads/main.zip  

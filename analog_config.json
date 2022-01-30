@@ -6,7 +6,6 @@
     "input_extensions": [".html", ".php"],
 
     "custom_values": {
-        "dark_red": "rgb(255, 50, 50)",
         "col": "column"
     },
 
@@ -18,8 +17,33 @@
             "unit": "rem"
         },
 
+        "pl": {
+            "property": "padding-left",
+            "unit": "rem"
+        },
+
+        "pr": {
+            "property": "padding-right",
+            "unit": "rem"
+        },
+
+        "pb": {
+            "property": "padding-bottom",
+            "unit": "rem"
+        },
+
+        "pt": {
+            "property": "padding-top",
+            "unit": "rem"
+        },
+
         "px": {
             "property": ["padding-left", "padding-right"],
+            "unit": "rem"
+        },
+
+        "py": {
+            "property": ["padding-bottom", "padding-top"],
             "unit": "rem"
         },
         
@@ -28,16 +52,34 @@
             "unit": "rem"
         },
 
-        "mt": {
-            "property": "margin-top"
+        "ml": {
+            "property": "margin-left",
+            "unit": "rem"
+        },
+
+        "mr": {
+            "property": "margin-right",
+            "unit": "rem"
         },
 
         "mb": {
-            "property": "margin-bottom"
+            "property": "margin-bottom",
+            "unit": "rem"
+        },
+
+        "mt": {
+            "property": "margin-top",
+            "unit": "rem"
+        },
+
+        "my": {
+            "property": ["margin-top", "margin-bottom"],
+            "unit": "rem"
         },
 
         "mx":{
-            "property": ["margin-left", "margin-right"]
+            "property": ["margin-left", "margin-right"],
+            "unit": "rem"
         },
         
         "max-w": {
@@ -70,6 +112,10 @@
 
         "align": {
             "property": "align-content"
+        },
+
+        "text": {
+            "property": "text-align"
         }
     },
 
