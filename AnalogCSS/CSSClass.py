@@ -54,7 +54,7 @@ class CSSClass:
         Generates a media query breakpoint with the current class attributes within self.attributes.
         """
         compiled_class = self.compile()
-        return f"@media ({mq_type}: {breakpoint}) {{\n{compiled_class[1:]}}}\n"  # use [1:] because otherwise the CSS class would start with 2 dots instead of one
+        return f"@media ({mq_type}: {breakpoint}) {{\n.{compiled_class[1:]}}}\n"  # use [1:] because otherwise the CSS class would start with 2 dots instead of one
 
     def compile(self):
         """
