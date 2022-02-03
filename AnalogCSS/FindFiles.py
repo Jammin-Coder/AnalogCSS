@@ -1,5 +1,3 @@
-import imp
-from AnalogCSS.tools import read_json
 from AnalogCSS.get_config import get_input_extensions, get_input_paths
 import os
 
