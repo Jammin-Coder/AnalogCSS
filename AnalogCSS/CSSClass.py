@@ -30,11 +30,30 @@ class CSSClass:
         # This splits the attribute string into individiual attributes since a CSS attribute is defined as <attribute-name>: <value>;
         attrs = self.attr_str.split(";")
 
+        open_comment = False # Used to keep track if a comment block is open.
         # Loop over each of the attributes and get the attribute name and value.
         for line in attrs:
             if line != "":
-                property = line.split(":")[0].strip()  # 
-                value = line.split(":")[1].strip()
+
+                # Handle comments
+                stripped_line = line.strip()
+
+                # Handles one-line comments
+                if stripped_line.split(" ")[0] == "/*" and stripped_line.split(" ")[-1] == "*/":
+                    continue
+                
+                # Handles multi-line comments
+                elif not open_comment:
+                    if stripped_line.split(" ")[0] == "/*":
+                        open_comment = True
+                        continue
+                else:
+                    if stripped_line.split(" ")[-1] == "*/":
+                        open_comment = False
+                        continue
+
+                property = line.split(":")[0].strip() # Get the property name
+                value = line.split(":")[1].strip() # Get the property value
                 self.set(property, value)  # Set the new property name to the new value.
     
     def get(self, property_name):
@@ -67,9 +86,3 @@ class CSSClass:
             value = self.get(key)
             output_string += f"\t{key}: {value};\n"
         return output_string + "}\n"
-
-        
-
-
-
-    
