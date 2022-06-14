@@ -1,10 +1,27 @@
-# AnalogCSS
+# Analog CSS
 
-A CSS/HTML pre-processor that allows for creating unlimited dynamic utility classes while keeping your code DRY.  
+An awesome CSS preprocessor to keep your CSS DRY. [Github Repo](https://github.com/Jammin-Coder/AnalogCSS)  
 
-## How it works:
+![analog_css_logo.png](https://timbattblog.com/images/resource/061422-62a8c3ba2ba84)
 
-Define a template class in `templates.scss`:
+## What is it?
+*Analog CSS* is a CSS preprocessor that allows you to create 'template' CSS classes. The template classes accept "parameters" that can be used inside of the class.
+The values of the parameters are determined when they are "called" in the user's markup.  
+Here's an example. You have a template class in `templates.scss`:  
+```
+.m-#{margin} {
+    margin: #{margin}rem;
+}
+```
+
+This template expects a value after `m-`, and that value is the amount of margin to be applied the the element.
+So, in your markup if you have a `div` with a class of `m-2`, Analog CSS will determine that you want that `div` to have a margin of 2rem, based on the template class you defined, and the value given to the class when you "called" it.
+
+
+
+## Some usage examples:
+
+First, download this repository's code, and copy the `analog-css` directory into a project directory of your choice. Then, in your project directory, define a template class in `templates.scss`:
 
 ```scss
 // template.scss
@@ -90,5 +107,4 @@ Note, the parameters in template class names must be separated by a `-`:
 ```scss
 // NOT ALLOWED:
 .grid-container#{width}#{bg}
-``` 
-
+```
