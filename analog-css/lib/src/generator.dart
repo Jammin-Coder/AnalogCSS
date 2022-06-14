@@ -104,7 +104,7 @@ class Generator {
       output += '\t$propName: $propValue;';
     }
 
-    output += '\n}\n';
+    output += '\n}\n\n';
     
     Map<String, String> paramMap = getMappedParams(cssClass);
     for (String paramName in paramMap.keys) {
