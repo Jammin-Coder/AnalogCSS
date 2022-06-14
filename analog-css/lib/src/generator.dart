@@ -54,7 +54,7 @@ class Generator {
     Map<String, String> paramMap = {};
     List<String> cssClassComponents = cssClass.split('-');
     for (int pos in parameterPostitions) {
-      String param = classNameComponents[pos];
+      String param = classNameComponents[pos].trim();
       paramMap[param] = cssClassComponents[pos];
     }
     
@@ -109,10 +109,7 @@ class Generator {
     Map<String, String> paramMap = getMappedParams(cssClass);
     for (String paramName in paramMap.keys) {
       String paramValue = paramMap[paramName]!.trim();
-
-      RegExp pattern = RegExp(r'' + paramName);
-
-      print(output.replaceAll(pattern, paramValue));
+      output = output.replaceAll(paramName, paramValue);
     }
 
 
