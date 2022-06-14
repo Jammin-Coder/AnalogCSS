@@ -66,9 +66,9 @@ void main(List<String> argv) async {
         }
     }
 
-    writeFile('output.css', '');
+    writeFile('analog.css', '');
     for (String _class in generatedClasses) {
-      appendFile('output.css', _class);
+      appendFile('analog.css', _class);
     }
     
     await Future.delayed(Duration(seconds: 1));
