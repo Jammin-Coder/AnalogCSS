@@ -1,6 +1,6 @@
 # Analog CSS
 
-An awesome CSS preprocessor to keep your CSS DRY. [Github Repo](https://github.com/Jammin-Coder/AnalogCSS)  
+An awesome CSS preprocessor to keep your CSS DRY.
 
 ![analog_css_logo.png](https://timbattblog.com/images/resource/061422-62a8c3ba2ba84)
 
